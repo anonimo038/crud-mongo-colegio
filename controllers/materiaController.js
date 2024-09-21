@@ -16,7 +16,7 @@ exports.obtenerMaterias = async (req,res)=>{
         const materias = await Materia.find().populate("estudiantes212")
         res.status(200).json(materias)
     }catch(error){
-        res.status(500).json({error: error.message})
+        res.status(500).json({error: error.message })
     }
 
 
