@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.error(`No se pudo conectar a Mongo ` , err))
 //rutas
 app.use("/api/estudiantes", estudiantesRoutes)
-app.use("/api/materia" ,materiaRoutes)
+app.use("/api/materia" , materiaRoutes)
 app.use("/api", authRoutes)
 const PORT = process.env.PORT || 3000
 

@@ -13,7 +13,7 @@ exports.crearMateria = async (req,res)=>{
 exports.obtenerMaterias = async (req,res)=>{
 
     try{
-        const materias = await Materia.find().populate("estudiantes212")
+        const materias = await Materia.find().populate("estudiantes")
         res.status(200).json(materias)
     }catch(error){
         res.status(500).json({error: error.message })
@@ -23,8 +23,7 @@ exports.obtenerMaterias = async (req,res)=>{
 }
 exports.obtenerMateriaPorId = async (req,res)=>{
     try{
-        const materia = await Materia.findById(req.params.id).populate
-        .populate("estudiantes")
+        const materia = await Materia.findById(req.params.id).populate("estudiantes")
         if(!materia){
             return res.status(404).json({message:"Materia no encontrada"})
         }

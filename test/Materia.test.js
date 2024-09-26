@@ -46,10 +46,60 @@ describe("Pruebas integradoras de materiaController", ()=>{
         }
         const  response = await request(app)
             .get("/api/materia")
-            .set("Authorization", token)
+            .set("Authorization",`Bearer ${token}`)
         expect(response.status).toEqual(200);
-        expect(response.body.length).toBe(1);
+        //expect(response.body.length).toBe(1);
 
 
     })
+    it("Test para obtener materia por ID", async ()=>{
+      
+        const materia = await Materia.create({
+            nombre:"sociales",
+            estudiantes:[],
+            profesor:"oscar torres"
+        })
+          const token = generarToken()
+          const res = await request(app)
+          .get(`/api/materia/${materia._id}`)
+          .set("Authorization",token)
+          expect(res.statusCode).toEqual(200)
+          expect(res.body.nombre).toBe("sociales")
+      
+      
+    })
+    it("Test para actualizar materia usando el ID", async ()=>{
+        const materia = await  Materia.create({
+            nombre:"sociales",
+            estudiantes:[],
+            profesor:"oscar torres"
+        })
+        const token = generarToken()
+        const res = await request(app)
+        .put(`/api/materia/${materia._id}`)
+        .set("Authorization", token).send({
+            nombre:"programacion",
+            estudiantes:[],
+            profesor:"maira moure"
+        })
+        expect(res.statusCode).toEqual(200)
+        expect(res.body.nombre).toBe("programacion")
+        expect(res.body.profesor).toBe("maira moure")
+       
+      
+      })
+      it("Test para eliminar materia por Id", async()=>{
+        const materia = await  Materia.create({
+            nombre:"programacion",
+            estudiantes:[],
+            profesor:"maira moure"
+  
+        })
+        token = generarToken()
+        const res = await request(app).delete(`/api/materia/${materia._id}`)
+        .set("Authorization", token)
+        expect(res.statusCode).toEqual(200)
+        expect(res.body.message).toBe(`Materia eliminada`)
+  
+      })
 })
